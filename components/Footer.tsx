@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { MapPin, Phone, Mail, Clock, Plane } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 interface CompanyInfo {
   address: string;
@@ -33,7 +33,7 @@ interface CompanyMetadata {
 const Footer = () => {
   const isClient = useIsClient();
   const [companyInfo, setCompanyInfo] = React.useState<CompanyInfo | null>(null);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const fetchCompanyInfo = async () => {
     try {
@@ -181,7 +181,7 @@ const Footer = () => {
               variant="link" 
               size="sm" 
               className="text-primary-foreground/60 hover:text-primary-foreground p-0"
-              onClick={() => navigate('/privacy-policy')}
+              onClick={() => router.push('/privacy-policy')}
             >
               Privacy Policy
             </Button>
@@ -189,7 +189,7 @@ const Footer = () => {
               variant="link" 
               size="sm" 
               className="text-primary-foreground/60 hover:text-primary-foreground p-0"
-              onClick={() => navigate('/terms-of-use')}
+              onClick={() => router.push('/terms-of-use')}
             >
               Terms of Use
             </Button>
