@@ -8,12 +8,11 @@ import { generateCanonicalUrl, generateImageUrl, truncateDescription } from '@/u
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Filter, Grid3X3, List, Star, Package, ShoppingCart } from 'lucide-react';
+import { Grid3X3, List, Star, Package, ShoppingCart } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { addToGuestCart } from "@/utils/guestCart";
-import { ProductGrid } from '@/components/ProductGrid';
 import Image from 'next/image';
 
 interface Product {

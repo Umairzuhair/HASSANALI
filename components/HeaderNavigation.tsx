@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Search, User, ShoppingCart } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
-import { getGuestCart } from '@/utils/guestCart';
 
 interface HeaderNavigationProps {
   onSearchClick: () => void;

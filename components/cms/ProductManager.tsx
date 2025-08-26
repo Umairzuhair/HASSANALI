@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -112,29 +112,7 @@ export const ProductManager = () => {
     if (draftKey) window.localStorage.removeItem(draftKey);
   };
 
-  useEffect(() => {
-    fetchProducts();
-    fetchProductImages();
-  }, []);
-
-  useEffect(() => {
-    // Live filter on searchTerm change
-    if (searchTerm.trim() === '') {
-      setFilteredProducts(products);
-    } else {
-      const filtered = products.filter((product) => {
-        const q = searchTerm.toLowerCase();
-        return (
-          product.name.toLowerCase().includes(q) ||
-          (product.category && product.category.toLowerCase().includes(q)) ||
-          (product.description && product.description.toLowerCase().includes(q))
-        );
-      });
-      setFilteredProducts(filtered);
-    }
-  }, [products, searchTerm]);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setIsSearching(true);
       const { data, error } = await supabase
@@ -157,9 +135,9 @@ export const ProductManager = () => {
       setLoading(false);
       setIsSearching(false);
     }
-  };
+  }, [toast]);
 
-  const fetchProductImages = async () => {
+  const fetchProductImages = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('product_images')
@@ -171,7 +149,29 @@ export const ProductManager = () => {
     } catch (error: unknown) {
       console.error('Error loading product images:', error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchProducts();
+    fetchProductImages();
+  }, [fetchProducts, fetchProductImages]);
+
+  useEffect(() => {
+    // Live filter on searchTerm change
+    if (searchTerm.trim() === '') {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter((product) => {
+        const q = searchTerm.toLowerCase();
+        return (
+          product.name.toLowerCase().includes(q) ||
+          (product.category && product.category.toLowerCase().includes(q)) ||
+          (product.description && product.description.toLowerCase().includes(q))
+        );
+      });
+      setFilteredProducts(filtered);
+    }
+  }, [products, searchTerm]);
 
   const moveProduct = async (productId: string, direction: 'up' | 'down', category: string) => {
     const categoryProducts = groupedProducts[category];

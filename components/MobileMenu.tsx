@@ -1,7 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { User, ShoppingCart, Package, MapPin } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 const productCategories = [
   { name: 'Refrigerators', slug: 'refrigerators' },
@@ -40,7 +40,7 @@ export const MobileMenu = ({
   onCategoryClick,
   onWhatsAppClick,
 }: MobileMenuProps) => {
-  const location = useLocation();
+  const router = useRouter();
 
   return (
     <div className="py-4 border-t border-primary/20">
@@ -68,7 +68,7 @@ export const MobileMenu = ({
         {/* Main Navigation */}
         <div className="space-y-2 pt-2 border-t border-primary/10">
           <Button
-            variant={location.pathname === '/allowance' ? 'default' : 'ghost'}
+            variant={router.pathname === '/allowance' ? 'default' : 'ghost'}
             onClick={onAllowanceClick}
             className="justify-start w-full text-lg font-semibold"
           >
@@ -77,7 +77,7 @@ export const MobileMenu = ({
           </Button>
           
           <Button
-            variant={location.pathname === '/store-locator' ? 'default' : 'ghost'}
+            variant={router.pathname === '/store-locator' ? 'default' : 'ghost'}
             onClick={onStoreLocatorClick}
             className="justify-start w-full text-lg font-semibold"
           >

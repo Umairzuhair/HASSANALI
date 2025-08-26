@@ -39,7 +39,7 @@ interface CheckoutPageProps {
 
 const Checkout = ({ initialCartItems, isGuest }: CheckoutPageProps) => {
   const router = useRouter();
-  const { user, loading: authLoading } = useAuth();
+  const { user } = useAuth();
   const { toast } = useToast();
   const [cartItems, setCartItems] = useState<CartItem[]>(initialCartItems);
   const [loading, setLoading] = useState(false);

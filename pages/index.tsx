@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { SEOHead } from '@/components/SEO/SEOHead';
 import { generateCanonicalUrl } from '@/utils/seoUtils';
@@ -49,10 +48,7 @@ interface HomePageProps {
 }
 
 const Index = ({ featuredProducts, brandLogos }: HomePageProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
   const handleCategorySelect = (category: string) => {
-    setSelectedCategory(category);
     console.log(`Selected category: ${category}`);
   };
 

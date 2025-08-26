@@ -1,6 +1,5 @@
 
 import { useIsClient } from '@/hooks/useIsClient';
-import { useState } from 'react';
 import { Header } from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ProductGrid } from '@/components/ProductGrid';
@@ -11,7 +10,6 @@ import { generateCanonicalUrl } from '@/utils/seoUtils';
 
 const DutyFree = () => {
   const isClient = useIsClient();
-  const [activeMode, setActiveMode] = useState<'duty-free' | 'allowance' | null>('duty-free');
 
   if (!isClient) return null;
 

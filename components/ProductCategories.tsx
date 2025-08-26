@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Fan } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 // Custom SVG icons inspired by your uploaded product images and instructions
 const BlenderIcon = (
@@ -117,12 +117,12 @@ export const ProductCategories = ({ onCategorySelect }: ProductCategoriesProps) 
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleCategoryClick = (category: typeof categories[0]) => {
     setSelectedCategory(category.name);
     onCategorySelect?.(category.name);
-    navigate(`/category/${category.slug}`);
+    router.push(`/category/${category.slug}`);
   };
 
   const updateArrowVisibility = () => {

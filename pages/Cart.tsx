@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -48,73 +48,6 @@ const Cart = () => {
   const [loadingWishlist, setLoadingWishlist] = useState(true);
 
   // Only fetch for signed-in user
-  const fetchCartItems = async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from('cart_items')
-        .select(`
-          id,
-          quantity,
-          products (
-            id,
-            name,
-            description,
-            category,
-            image_url,
-            rating,
-            reviews_count,
-            in_stock
-          )
-        `)
-        .eq('user_id', user?.id);
-
-      if (error) throw error;
-      setCartItems((data as unknown as CartItem[]) || []);
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      toast({
-        title: "Error loading cart",
-        description: errorMessage,
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Fetch wishlist (signed-in users only)
-  const fetchWishlist = async () => {
-    setLoadingWishlist(true);
-    try {
-      const { data, error } = await supabase
-        .from('wishlist')
-        .select(`
-          id,
-          product:products (
-            id,
-            name,
-            description,
-            category,
-            image_url
-          )
-        `)
-        .eq('user_id', user?.id);
-      if (error) throw error;
-      setWishlist((data as unknown as WishlistItem[]) || []);
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      toast({
-        title: "Error loading wishlist",
-        description: errorMessage,
-        variant: "destructive",
-      });
-    } finally {
-      setLoadingWishlist(false);
-    }
-  };
-
-  // For signed-in users, update the cart in Supabase
   const updateQuantity = async (itemId: string, newQuantity: number) => {
     if (newQuantity < 1) return;
     if (!user) {

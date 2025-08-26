@@ -1,7 +1,7 @@
 import { useIsClient } from '@/hooks/useIsClient';
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { Header } from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -39,6 +39,7 @@ interface Order {
 }
 
 const Account = () => {
+  const router = useRouter();
   const isClient = useIsClient();
   if (!isClient) return null;
   return <AccountClient />;
@@ -46,7 +47,7 @@ const Account = () => {
 
 const AccountClient = () => {
   const { user, signOut, loading: authLoading } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
   const { toast } = useToast();
   const [profile, setProfile] = useState({ full_name: '', email: '' });
   const [loading, setLoading] = useState(false);
@@ -55,9 +56,9 @@ const AccountClient = () => {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      navigate('/auth');
+      router.push('/auth');
     }
-  }, [user, authLoading, navigate]);
+  }, [user, authLoading, router]);
 
   const fetchProfile = useCallback(async () => {
     try {
@@ -177,7 +178,7 @@ const AccountClient = () => {
       
       // Force navigation after a brief delay to ensure state is cleared
       setTimeout(() => {
-        navigate('/', { replace: true });
+        router.replace('/');
       }, 100);
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -190,7 +191,7 @@ const AccountClient = () => {
       
       // Force navigation even on error
       setTimeout(() => {
-        navigate('/', { replace: true });
+        router.replace('/');
       }, 100);
     }
   };
@@ -246,7 +247,7 @@ const AccountClient = () => {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => navigate('/')}
+              onClick={() => router.push('/')}
               className="ml-4"
             >
               <X className="w-5 h-5" />
@@ -258,7 +259,7 @@ const AccountClient = () => {
             <p className="text-muted-foreground mb-6">
               Create an account or sign in to manage your profile
             </p>
-            <Button onClick={() => navigate('/auth')}>
+            <Button onClick={() => router.push('/auth')}>
               Sign In
             </Button>
           </div>
@@ -282,7 +283,7 @@ const AccountClient = () => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             className="ml-4"
           >
             <X className="w-5 h-5" />
@@ -305,7 +306,7 @@ const AccountClient = () => {
                 <div className="flex flex-col items-center py-8">
                   <AlertCircle className="w-12 h-12 text-muted-foreground mb-4" />
                   <div className="font-semibold mb-2">You have not placed any orders yet.</div>
-                  <Button size="sm" onClick={() => navigate('/')}>
+                  <Button size="sm" onClick={() => router.push('/')}>
                     Shop now
                   </Button>
                 </div>
@@ -364,7 +365,7 @@ const AccountClient = () => {
                               <div 
                                 key={item.id} 
                                 className="flex items-center gap-3 p-3 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
-                                onClick={() => navigate(`/product/${item.product_id}`)}
+                                onClick={() => router.push(`/product/${item.product_id}`)}
                               >
                                 {item.product_image_url && (
                                   <Image

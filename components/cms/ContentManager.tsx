@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -51,11 +51,7 @@ export const ContentManager = () => {
     { key: 'hero_image_mobile', label: 'Hero Image (Mobile)', icon: Smartphone }
   ];
 
-  useEffect(() => {
-    fetchContents();
-  }, []);
-
-  const fetchContents = async () => {
+  const fetchContents = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('website_content')
@@ -74,7 +70,11 @@ export const ContentManager = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchContents();
+  }, [fetchContents]);
 
   const createHeroImageSection = async (sectionKey: string, sectionLabel: string) => {
     try {

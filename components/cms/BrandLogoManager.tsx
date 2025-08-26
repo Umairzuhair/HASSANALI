@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -42,11 +42,7 @@ export const BrandLogoManager = () => {
     is_active: true
   });
 
-  useEffect(() => {
-    fetchLogos();
-  }, []);
-
-  const fetchLogos = async () => {
+  const fetchLogos = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('brand_logos')
@@ -66,7 +62,11 @@ export const BrandLogoManager = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchLogos();
+  }, [fetchLogos]);
 
   const moveLogo = async (logoId: string, direction: 'up' | 'down') => {
     const currentIndex = logos.findIndex(l => l.id === logoId);

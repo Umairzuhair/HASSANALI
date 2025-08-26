@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Package, ChevronRight, Plane, MapPin } from 'lucide-react';
@@ -13,7 +13,7 @@ interface HeroProps {
 }
 
 export const Hero = ({ setActiveMode }: HeroProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [heroImageDesktop, setHeroImageDesktop] = useState<string>('');
   const [heroImageMobile, setHeroImageMobile] = useState<string>('');
   const isMobile = useIsMobile();
@@ -66,7 +66,7 @@ export const Hero = ({ setActiveMode }: HeroProps) => {
 
   const handleDutyFreeClick = () => {
     setActiveMode('duty-free');
-    navigate('/duty-free');
+    router.push('/duty-free');
   };
 
   const currentHeroImage = isMobile ? heroImageMobile : heroImageDesktop;

@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -39,12 +39,7 @@ export const DutyFreeProductsManager = () => {
   const [selectedProductId, setSelectedProductId] = useState<string>('');
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchDutyFreeProducts();
-    fetchAvailableProducts();
-  }, []);
-
-  const fetchDutyFreeProducts = async () => {
+  const fetchDutyFreeProducts = useCallback(async () => {
     try {
       // First get duty free products
       const { data: dutyFreeData, error: dutyFreeError } = await supabase
@@ -93,9 +88,9 @@ export const DutyFreeProductsManager = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
 
-  const fetchAvailableProducts = async () => {
+  const fetchAvailableProducts = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('products')
@@ -113,7 +108,12 @@ export const DutyFreeProductsManager = () => {
         variant: "destructive",
       });
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchDutyFreeProducts();
+    fetchAvailableProducts();
+  }, [fetchDutyFreeProducts, fetchAvailableProducts]);
 
   const addDutyFreeProduct = async () => {
     if (!selectedProductId) return;
