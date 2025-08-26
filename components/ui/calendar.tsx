@@ -7,33 +7,6 @@ import { buttonVariants } from "@/components/ui/button";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
-type CustomNavigationProps = {
-  className?: string;
-  previousButtonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
-  nextButtonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
-};
-// Custom navigation component for DayPicker v9
-function CustomNavigation(props: CustomNavigationProps) {
-  return (
-    <div className={props.className}>
-      <button
-        type="button"
-        {...props.previousButtonProps}
-        aria-label="Previous Month"
-      >
-        <ChevronLeft className="h-4 w-4" />
-      </button>
-      <button
-        type="button"
-        {...props.nextButtonProps}
-        aria-label="Next Month"
-      >
-        <ChevronRight className="h-4 w-4" />
-      </button>
-    </div>
-  );
-}
-
 const Calendar = React.forwardRef<
   React.ElementRef<typeof DayPicker>,
   React.ComponentPropsWithoutRef<typeof DayPicker>
@@ -76,7 +49,6 @@ const Calendar = React.forwardRef<
         day_hidden: "invisible",
         ...classNames,
       }}
-      nav={CustomNavigation}
       {...props}
     />
   );
