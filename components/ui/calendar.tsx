@@ -1,11 +1,33 @@
 import * as React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DayPicker } from "react-day-picker";
+import { DayPicker, NavigationProps } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+
+// Custom navigation component for DayPicker v9
+function CustomNavigation(props: NavigationProps) {
+  return (
+    <div className={props.className}>
+      <button
+        type="button"
+        {...props.previousButtonProps}
+        aria-label="Previous Month"
+      >
+        <ChevronLeft className="h-4 w-4" />
+      </button>
+      <button
+        type="button"
+        {...props.nextButtonProps}
+        aria-label="Next Month"
+      >
+        <ChevronRight className="h-4 w-4" />
+      </button>
+    </div>
+  );
+}
 
 const Calendar = React.forwardRef<
   React.ElementRef<typeof DayPicker>,
@@ -50,8 +72,7 @@ const Calendar = React.forwardRef<
         ...classNames,
       }}
       components={{
-        LeftNavigation: () => <ChevronLeft className="h-4 w-4" />,
-        RightNavigation: () => <ChevronRight className="h-4 w-4" />,
+        Navigation: CustomNavigation,
       }}
       {...props}
     />
