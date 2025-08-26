@@ -12,10 +12,8 @@ import { ProductCategories } from '@/components/ProductCategories';
 
 const LocalCustomer = () => {
   const isClient = useIsClient();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const handleCategorySelect = (category: string) => {
-    setSelectedCategory(category);
     console.log(`Selected category: ${category}`);
   };
 

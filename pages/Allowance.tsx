@@ -11,10 +11,8 @@ import { BackToTopButton } from '@/components/BackToTopButton';
 
 const Allowance = () => {
   const isClient = useIsClient();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const handleCategorySelect = (category: string) => {
-    setSelectedCategory(category);
     console.log(`Selected category: ${category}`);
   };
 

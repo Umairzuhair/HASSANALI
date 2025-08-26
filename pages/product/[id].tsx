@@ -44,7 +44,6 @@ const ProductDetail = ({ product, relatedProducts }: ProductPageProps) => {
 
   // If we have server-side data, use it immediately
   const [currentProduct, setCurrentProduct] = useState<Product>(product);
-  const [currentRelatedProducts, setCurrentRelatedProducts] = useState<Product[]>(relatedProducts);
 
   // Only fetch if we don't have server-side data
   const fetchProduct = useCallback(async () => {
@@ -303,11 +302,11 @@ const ProductDetail = ({ product, relatedProducts }: ProductPageProps) => {
         </div>
 
         {/* Related Products */}
-        {currentRelatedProducts.length > 0 && (
+        {relatedProducts.length > 0 && (
           <div className="mt-12">
             <h2 className="text-2xl font-bold mb-6">Related Products</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {currentRelatedProducts.map((p) => (
+              {relatedProducts.map((p) => (
                 <Card
                   key={p.id}
                   className="cursor-pointer hover:shadow-md transition-shadow"

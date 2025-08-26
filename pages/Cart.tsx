@@ -41,11 +41,9 @@ const Cart = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState(true);
 
   // Wishlist state (only for signed-in users)
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
-  const [loadingWishlist, setLoadingWishlist] = useState(true);
 
   // Only fetch for signed-in user
   const updateQuantity = async (itemId: string, newQuantity: number) => {
@@ -125,7 +123,7 @@ const Cart = () => {
 
   // --- UI RENDER ---
 
-  if (authLoading || loading) {
+  if (authLoading) {
     return (
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-8">
@@ -156,9 +154,7 @@ const Cart = () => {
         </div>
 
         {/* Wishlist section: Hide for guests */}
-        {user && (loadingWishlist ? (
-          <div className="text-center mb-4">Loading wishlist...</div>
-        ) : wishlist.length > 0 ? (
+        {user && (
           <div className="mb-8">
             <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
               <Heart className="w-5 h-5 text-red-500" />
@@ -186,7 +182,7 @@ const Cart = () => {
               ))}
             </div>
           </div>
-        ) : null)}
+        )}
 
         {/* Cart Items */}
         {cartItems.length === 0 ? (
