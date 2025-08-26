@@ -96,12 +96,14 @@ export const ProductManager = () => {
     specifications: specsTemplate
   };
 
+  type ProductFormData = typeof initialFormData;
+
   const [formData, setFormDataRaw] = usePersistentState(
     initialFormData,
     "edit-draft-product-dummy"
   );
 
-  const setFormData = (updater: (prev: typeof formData) => typeof formData) => {
+  const setFormData = (updater: (prev: ProductFormData) => ProductFormData) => {
     if (editingId || isCreating) {
       const newData = updater(formData);
       setFormDataRaw(newData);
@@ -554,7 +556,7 @@ export const ProductManager = () => {
                 <Input
                   id="name"
                   value={formData.name}
-                  onChange={(e) => setFormData((prev: any) => ({ ...prev, name: e.target.value }))}
+                  onChange={(e) => setFormData((prev: ProductFormData) => ({ ...prev, name: e.target.value }))}
                   placeholder="Product name"
                 />
               </div>
@@ -564,7 +566,7 @@ export const ProductManager = () => {
                 <Input
                   id="category"
                   value={formData.category}
-                  onChange={(e) => setFormData((prev: any) => ({ ...prev, category: e.target.value }))}
+                  onChange={(e) => setFormData((prev: ProductFormData) => ({ ...prev, category: e.target.value }))}
                   placeholder="Product category"
                 />
               </div>
@@ -574,7 +576,7 @@ export const ProductManager = () => {
               <Label>Description (with Media Support)</Label>
               <RichTextEditor
                 value={formData.description}
-                onChange={(value) => setFormData((prev: any) => ({ ...prev, description: value }))}
+                onChange={(value) => setFormData((prev: ProductFormData) => ({ ...prev, description: value }))}
                 placeholder="Enter product description with support for images, videos, and YouTube links..."
               />
             </div>
@@ -584,7 +586,7 @@ export const ProductManager = () => {
               <Textarea
                 id="insight"
                 value={formData.insight}
-                onChange={(e) => setFormData((prev: any) => ({ ...prev, insight: e.target.value }))}
+                onChange={(e) => setFormData((prev: ProductFormData) => ({ ...prev, insight: e.target.value }))}
                 placeholder="Enter product insights here"
                 className="min-h-20"
               />
@@ -595,7 +597,7 @@ export const ProductManager = () => {
               <Input
                 id="image_url"
                 value={formData.image_url}
-                onChange={(e) => setFormData((prev: any) => ({ ...prev, image_url: e.target.value }))}
+                onChange={(e) => setFormData((prev: ProductFormData) => ({ ...prev, image_url: e.target.value }))}
                 placeholder="https://example.com/image.jpg"
               />
             </div>
@@ -610,7 +612,7 @@ export const ProductManager = () => {
                   max="5"
                   step="0.1"
                   value={formData.rating}
-                  onChange={(e) => setFormData((prev: any) => ({ ...prev, rating: e.target.value }))}
+                  onChange={(e) => setFormData((prev: ProductFormData) => ({ ...prev, rating: e.target.value }))}
                 />
               </div>
               
@@ -621,7 +623,7 @@ export const ProductManager = () => {
                   type="number"
                   min="0"
                   value={formData.reviews_count}
-                  onChange={(e) => setFormData((prev: any) => ({ ...prev, reviews_count: e.target.value }))}
+                  onChange={(e) => setFormData((prev: ProductFormData) => ({ ...prev, reviews_count: e.target.value }))}
                 />
               </div>
 
@@ -632,7 +634,7 @@ export const ProductManager = () => {
                   type="number"
                   min="0"
                   value={formData.display_order}
-                  onChange={(e) => setFormData((prev: any) => ({ ...prev, display_order: e.target.value }))}
+                  onChange={(e) => setFormData((prev: ProductFormData) => ({ ...prev, display_order: e.target.value }))}
                 />
               </div>
               
@@ -641,7 +643,7 @@ export const ProductManager = () => {
                   <Switch
                     id="in_stock"
                     checked={formData.in_stock}
-                    onCheckedChange={(checked: boolean) => setFormData((prev: any) => ({ ...prev, in_stock: checked }))}
+                    onCheckedChange={(checked: boolean) => setFormData((prev: ProductFormData) => ({ ...prev, in_stock: checked }))}
                   />
                   <Label htmlFor="in_stock">In Stock</Label>
                 </div>
@@ -649,7 +651,7 @@ export const ProductManager = () => {
                   <Switch
                     id="is_visible"
                     checked={formData.is_visible}
-                    onCheckedChange={(checked: boolean) => setFormData((prev: any) => ({ ...prev, is_visible: checked }))}
+                    onCheckedChange={(checked: boolean) => setFormData((prev: ProductFormData) => ({ ...prev, is_visible: checked }))}
                   />
                   <Label htmlFor="is_visible">Visible</Label>
                 </div>
@@ -661,7 +663,7 @@ export const ProductManager = () => {
               <Textarea
                 id="specifications"
                 value={formData.specifications}
-                onChange={(e) => setFormData((prev: any) => ({ ...prev, specifications: e.target.value }))}
+                onChange={(e) => setFormData((prev: ProductFormData) => ({ ...prev, specifications: e.target.value }))}
                 placeholder='{"key": "value"}'
                 className="min-h-24 font-mono text-sm"
               />
