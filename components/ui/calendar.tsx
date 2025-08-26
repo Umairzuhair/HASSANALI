@@ -76,9 +76,7 @@ const Calendar = React.forwardRef<
         day_hidden: "invisible",
         ...classNames,
       }}
-      components={{
-        Navigation: CustomNavigation,
-      }}
+      nav={CustomNavigation}
       {...props}
     />
   );
