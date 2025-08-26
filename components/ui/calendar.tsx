@@ -7,8 +7,13 @@ import { buttonVariants } from "@/components/ui/button";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
+type CustomNavigationProps = {
+  className?: string;
+  previousButtonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+  nextButtonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+};
 // Custom navigation component for DayPicker v9
-function CustomNavigation(props: any) {
+function CustomNavigation(props: CustomNavigationProps) {
   return (
     <div className={props.className}>
       <button
