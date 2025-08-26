@@ -50,8 +50,8 @@ const Calendar = React.forwardRef<
         ...classNames,
       }}
       components={{
-        IconLeft: () => <ChevronLeft className="h-4 w-4" />,
-        IconRight: () => <ChevronRight className="h-4 w-4" />,
+        LeftNavigation: () => <ChevronLeft className="h-4 w-4" />,
+        RightNavigation: () => <ChevronRight className="h-4 w-4" />,
       }}
       {...props}
     />
